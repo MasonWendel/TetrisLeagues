@@ -12,7 +12,7 @@ public class TetrisBlock {
         this.color = color;
 
         x=7; 
-        y=-4;
+        y=-3;
     }
 
     public int getX() {
@@ -40,6 +40,9 @@ public class TetrisBlock {
 
     public int getBottomEdge(){
         return shape.length + getY(); 
+    }
+    public int getTopEdge(){
+        return getY(); 
     }
 
     public void moveDown(){

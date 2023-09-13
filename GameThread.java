@@ -9,13 +9,18 @@ public class GameThread extends Thread {
     }
 
     public void run(){
+        int count = 0; 
         while(true){
-            boolean check = mainPanel.moveBlock();
+            if(count == 8){
+                System.out.println("Works");
+                mainPanel.spawnBlock();
+            }
+            boolean check = mainPanel.moveBlocks();
             System.out.println(check);
             while(check){
                 try {
                     Thread.sleep(1000);
-                    
+                    count++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

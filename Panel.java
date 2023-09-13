@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.RenderingHints;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 //import javax.swing.JFrame;
@@ -12,7 +13,8 @@ import javax.swing.JPanel;
 //import java.awt.Dimension;
 
 public class Panel extends JPanel {
-	private TetrisBlock block; 
+ 
+	private ArrayList<TetrisBlock> blocks = new ArrayList<TetrisBlock>();
 
 	private int WIDTH = 300;
 	private int HEIGHT = 460; 
@@ -34,33 +36,46 @@ public class Panel extends JPanel {
 	}
 
 	public void spawnBlock(){
-		block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.GREEN);
+		TetrisBlock block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.GREEN);
+		blocks.add(block);
 	}
 
-	public boolean moveBlock(){
-		if(checkBottom()){
-			block.moveDown();
-			repaint();
-			return true;
-		} 
+	public boolean moveBlocks(){
+		for (TetrisBlock block : blocks) {
+			if(checkBottom(block)){
+				block.moveDown();
+				repaint();
+				return true;
+			} 
+		}	
 		return false; 
 	}
 
-	public boolean checkBottom(){
-		return block.getBottomEdge() != gridRows;
+	public boolean checkBottom(TetrisBlock block){
+		return block.getBottomEdge() != gridRows&&!(block.getBottomEdge()==overBlock(block));
+	}
+	public int overBlock(TetrisBlock block){
+		for (TetrisBlock b: blocks) {
+			if(!(b.getX()+b.getWidth()-1>block.getX()||block.getX()+block.getWidth()-1>b.getX())){
+				return 	b.getTopEdge();
+			} 
+		}
+		return -1; 
 	}
 
 	public void drawBlock(Graphics g){
-		for(int r=0; r<block.getWidth(); r++){
-			for(int c=0; c<block.getHeight(); c++){
-				if(block.getShape()[r][c]==1){
-					g.setColor(block.getColor());
-					g.fillRect((block.getX()*gridCellSize)+(c*gridCellSize),(block.getY()*gridCellSize)+(r*gridCellSize), gridCellSize, gridCellSize);
-					g.setColor(Color.BLACK);
-					g.drawRect((block.getX()*gridCellSize)+(c*gridCellSize),(block.getY()*gridCellSize)+(r*gridCellSize), gridCellSize, gridCellSize);
+		for (TetrisBlock block : blocks) {
+			for(int r=0; r<block.getWidth(); r++){
+				for(int c=0; c<block.getHeight(); c++){
+					if(block.getShape()[r][c]==1){
+						g.setColor(block.getColor());
+						g.fillRect((block.getX()*gridCellSize)+(c*gridCellSize),(block.getY()*gridCellSize)+(r*gridCellSize), gridCellSize, gridCellSize);
+						g.setColor(Color.BLACK);
+						g.drawRect((block.getX()*gridCellSize)+(c*gridCellSize),(block.getY()*gridCellSize)+(r*gridCellSize), gridCellSize, gridCellSize);
+					}
 				}
 			}
-		}
+		}	
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
