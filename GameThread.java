@@ -1,5 +1,7 @@
 //import javax.swing.JPanel;
 
+import java.awt.Color;
+
 public class GameThread extends Thread {
     
     private Panel mainPanel; 
@@ -13,7 +15,7 @@ public class GameThread extends Thread {
         while(true){
             if(count == 8){
                 System.out.println("Works");
-                mainPanel.spawnBlock();
+                mainPanel.spawnBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.BLUE, 8,-3);
             }
             boolean check = mainPanel.moveBlocks();
             System.out.println(check);

@@ -7,12 +7,12 @@ public class TetrisBlock {
     
     
 
-    public TetrisBlock(int[][] shape, Color color) {
+    public TetrisBlock(int[][] shape, Color color, int x, int y) {
         this.shape = shape;
         this.color = color;
 
-        x=7; 
-        y=-3;
+        this.x=x; 
+        this.y=y;
     }
 
     public int getX() {

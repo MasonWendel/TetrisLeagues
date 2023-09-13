@@ -36,7 +36,12 @@ public class Panel extends JPanel {
 	}
 
 	public void spawnBlock(){
-		TetrisBlock block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.GREEN);
+		TetrisBlock block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.GREEN , 7,-3);
+		blocks.add(block);
+	}
+
+	public void spawnBlock(int[][] shape, Color c, int x, int y){
+		TetrisBlock block = new TetrisBlock(shape, c, x ,y);
 		blocks.add(block);
 	}
 
@@ -45,20 +50,29 @@ public class Panel extends JPanel {
 			if(checkBottom(block)){
 				block.moveDown();
 				repaint();
-				return true;
+				//return true;
 			} 
+			
 		}	
-		return false; 
+		return true; 
 	}
 
 	public boolean checkBottom(TetrisBlock block){
-		return block.getBottomEdge() != gridRows&&!(block.getBottomEdge()==overBlock(block));
+		System.out.println(overBlock(block));
+		return block.getBottomEdge() != gridRows&&(block.getBottomEdge()!=overBlock(block));
 	}
 	public int overBlock(TetrisBlock block){
 		for (TetrisBlock b: blocks) {
-			if(!(b.getX()+b.getWidth()-1>block.getX()||block.getX()+block.getWidth()-1>b.getX())){
-				return 	b.getTopEdge();
-			} 
+			if(!b.equals(block)){
+				if(!(b.getX()<block.getX()-b.getWidth()||b.getX()>block.getX()+block.getWidth())){
+					//return 	b.getTopEdge();
+					for(int i =0; i<block.getWidth(); i++){
+						if(block.getShape()[block.getHeight()][i] == 0){
+							
+						}
+					}
+				} 
+			}
 		}
 		return -1; 
 	}
