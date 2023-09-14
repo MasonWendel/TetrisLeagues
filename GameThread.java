@@ -14,7 +14,6 @@ public class GameThread extends Thread {
         int count = 0; 
         while(true){
             if(count == 8){
-                System.out.println("Works");
                 mainPanel.spawnBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.BLUE, 8,-3);
             }
             boolean check = mainPanel.moveBlocks();

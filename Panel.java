@@ -59,22 +59,26 @@ public class Panel extends JPanel {
 
 	public boolean checkBottom(TetrisBlock block){
 		System.out.println(overBlock(block));
-		return block.getBottomEdge() != gridRows&&(block.getBottomEdge()!=overBlock(block));
+		return block.getBottomEdge() != gridRows && !overBlock(block);
 	}
-	public int overBlock(TetrisBlock block){
+	public boolean overBlock(TetrisBlock block){
 		for (TetrisBlock b: blocks) {
 			if(!b.equals(block)){
 				if(!(b.getX()<block.getX()-b.getWidth()||b.getX()>block.getX()+block.getWidth())){
 					//return 	b.getTopEdge();
-					for(int i =0; i<block.getWidth(); i++){
-						if(block.getShape()[block.getHeight()][i] == 0){
-							
+					ArrayList<Integer> btm = block.getBottomEdges(); 
+					ArrayList<Integer> top = b.getTopEdges(); 
+					for(int i =0; i<btm.size(); i++){
+						for(int j =0; j<top.size(); j++){
+							if(i+block.getX()==j+b.getX() && btm.get(i)+1>=top.get(j)){
+								return true; 
+							}
 						}
 					}
 				} 
 			}
 		}
-		return -1; 
+		return false; 
 	}
 
 	public void drawBlock(Graphics g){
