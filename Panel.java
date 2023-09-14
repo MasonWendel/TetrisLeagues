@@ -58,8 +58,7 @@ public class Panel extends JPanel {
 	}
 
 	public boolean checkBottom(TetrisBlock block){
-		System.out.println(overBlock(block));
-		return block.getBottomEdge() != gridRows && !overBlock(block);
+		return !(block.getBottomEdge() == gridRows || overBlock(block));
 	}
 	public boolean overBlock(TetrisBlock block){
 		for (TetrisBlock b: blocks) {
@@ -70,7 +69,7 @@ public class Panel extends JPanel {
 					ArrayList<Integer> top = b.getTopEdges(); 
 					for(int i =0; i<btm.size(); i++){
 						for(int j =0; j<top.size(); j++){
-							if(i+block.getX()==j+b.getX() && btm.get(i)+1>=top.get(j)){
+							if(i+block.getX()==j+b.getX() && btm.get(i)==top.get(j)-2){
 								return true; 
 							}
 						}
@@ -83,8 +82,8 @@ public class Panel extends JPanel {
 
 	public void drawBlock(Graphics g){
 		for (TetrisBlock block : blocks) {
-			for(int r=0; r<block.getWidth(); r++){
-				for(int c=0; c<block.getHeight(); c++){
+			for(int r=0; r<block.getHeight(); r++){
+				for(int c=0; c<block.getWidth(); c++){
 					if(block.getShape()[r][c]==1){
 						g.setColor(block.getColor());
 						g.fillRect((block.getX()*gridCellSize)+(c*gridCellSize),(block.getY()*gridCellSize)+(r*gridCellSize), gridCellSize, gridCellSize);

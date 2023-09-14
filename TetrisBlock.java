@@ -29,7 +29,6 @@ public class TetrisBlock {
                 }
             }
         }
-        System.out.println(arr);
         return arr; 
     }
     public ArrayList<Integer> getTopEdges(){
@@ -55,11 +54,11 @@ public class TetrisBlock {
         return y;
     }
     public int getWidth(){
-        return shape.length; 
+        return shape[0].length;
     }
 
     public int getHeight(){
-        return shape[0].length;
+        return shape.length; 
     }
 
     public int[][] getShape() {
