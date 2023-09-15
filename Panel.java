@@ -4,7 +4,6 @@ import java.awt.Graphics;
 //import java.awt.Graphics2D;
 //import java.awt.RenderingHints;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 //import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,6 +35,10 @@ public class Panel extends JPanel {
 		gridRows = HEIGHT/gridCellSize; 
 
 		spawnBlock();
+	}
+
+	public TetrisBlock getCurrBlock(){
+		return currControlledBlock;
 	}
 
 	public void spawnBlock(){
