@@ -14,12 +14,12 @@ public class GameThread extends Thread {
         int count = 0; 
         while(true){
             if(count == 8){
-                mainPanel.spawnBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.BLUE, 6,-3);
+                mainPanel.spawnBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.BLUE, 7,-3);
             }
             boolean check = mainPanel.moveBlocks();
             while(check){
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     count++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();

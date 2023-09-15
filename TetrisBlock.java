@@ -6,6 +6,7 @@ public class TetrisBlock {
     private int x,y; 
     private int[][] shape; 
     private Color color;
+    private boolean isMoving; 
     
     
 
@@ -15,6 +16,13 @@ public class TetrisBlock {
 
         this.x=x; 
         this.y=y;
+
+        isMoving = true; 
+
+        if(color.equals(Color.BLUE)){
+            rotateRight();
+        }
+        
     }
 
     public ArrayList<Integer> getBottomEdges(){
@@ -25,7 +33,7 @@ public class TetrisBlock {
         for(int i = getHeight()-1; i>=0; i--){
             for(int j = 0; j<getWidth(); j++){
                 if(shape[i][j]==1&&arr.get(j)==0){
-                    arr.set(j,getY()+(getHeight()-i)); 
+                    arr.set(j,(getY()+getHeight()+1)-(getHeight()-i)); 
                 }
             }
         }
@@ -44,6 +52,44 @@ public class TetrisBlock {
             }
         }
         return arr; 
+    }
+
+    public int[][] transposeShape(int[][] shape){
+        int[][] arr = new int[shape[0].length][shape.length];
+        for(int c = 0; c<shape[0].length; c++){
+            for(int r=0; r<shape.length; r++){
+                arr[c][r] = shape[r][c];
+            }
+        }
+        return arr;
+    }
+
+    public int[][] reverseRows(int[][] arr){
+        for(int i = 0; i<arr.length/2; i++){
+            int[] holder = arr[i];
+            arr[i] = arr[arr.length-1-i];
+            arr[arr.length-1-i] = holder; 
+        }
+        return arr;
+    }
+
+    public int[][] reverseCols(int[][] arr){
+        for (int[] row : arr) {
+            for(int i = 0; i<row.length/2; i++){
+            int holder = row[i];
+            row[i] = row[row.length-1-i];
+            row[row.length-1-i] = holder; 
+        }
+        }
+        return arr;
+    }
+
+    public void rotateRight(){
+        shape = reverseCols(transposeShape(shape));
+    }
+
+    public void rotateLeft(){
+        shape = reverseRows(transposeShape(shape));
     }
 
     public int getX() {
@@ -76,6 +122,14 @@ public class TetrisBlock {
         return getY(); 
     }
 
+    public void setMoving(boolean b){
+        isMoving = b; 
+    }
+    
+    public boolean isMoving(){
+        return isMoving; 
+    }
+
     public void moveDown(){
         y++;
     }
@@ -87,5 +141,6 @@ public class TetrisBlock {
     public void moveLeft(){
         x--;
     }
+
     
 }

@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 //import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import javax.swing.border.Border;
+import javax.swing.event.TreeExpansionEvent;
 
 //import java.awt.Dimension;
 
@@ -22,6 +23,8 @@ public class Panel extends JPanel {
 	private int gridRows; 
 	private int gridCols;
 	private int gridCellSize;
+
+	private TetrisBlock currControlledBlock;
 	
 	public Panel(int cols){
 		this.setBounds(195, 50, WIDTH, HEIGHT);
@@ -38,11 +41,13 @@ public class Panel extends JPanel {
 	public void spawnBlock(){
 		TetrisBlock block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.GREEN , 7,-3);
 		blocks.add(block);
+		currControlledBlock = block;
 	}
 
 	public void spawnBlock(int[][] shape, Color c, int x, int y){
 		TetrisBlock block = new TetrisBlock(shape, c, x ,y);
 		blocks.add(block);
+		currControlledBlock = block;
 	}
 
 	public boolean moveBlocks(){
@@ -51,8 +56,9 @@ public class Panel extends JPanel {
 				block.moveDown();
 				repaint();
 				//return true;
-			} 
-			
+			}else{
+				block.setMoving(false);
+			}
 		}	
 		return true; 
 	}
@@ -67,9 +73,11 @@ public class Panel extends JPanel {
 					//return 	b.getTopEdge();
 					ArrayList<Integer> btm = block.getBottomEdges(); 
 					ArrayList<Integer> top = b.getTopEdges(); 
+					System.out.println(btm);
+					System.out.println(top);
 					for(int i =0; i<btm.size(); i++){
 						for(int j =0; j<top.size(); j++){
-							if(i+block.getX()==j+b.getX() && btm.get(i)==top.get(j)-2){
+							if(i+block.getX()==j+b.getX() && btm.get(i)==top.get(j)){
 								return true; 
 							}
 						}
