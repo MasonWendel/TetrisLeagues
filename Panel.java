@@ -8,7 +8,7 @@ import javax.swing.BorderFactory;
 //import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import javax.swing.border.Border;
-import javax.swing.event.TreeExpansionEvent;
+
 
 //import java.awt.Dimension;
 
@@ -76,8 +76,6 @@ public class Panel extends JPanel {
 					//return 	b.getTopEdge();
 					ArrayList<Integer> btm = block.getBottomEdges(); 
 					ArrayList<Integer> top = b.getTopEdges(); 
-					System.out.println(btm);
-					System.out.println(top);
 					for(int i =0; i<btm.size(); i++){
 						for(int j =0; j<top.size(); j++){
 							if(i+block.getX()==j+b.getX() && btm.get(i)==top.get(j)){

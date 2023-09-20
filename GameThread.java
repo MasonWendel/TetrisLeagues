@@ -2,6 +2,9 @@
 
 import java.awt.Color;
 
+import javax.swing.event.MenuKeyEvent;
+import javax.swing.event.MenuKeyListener;
+
 public class GameThread extends Thread {
     
     private Panel mainPanel; 
@@ -10,13 +13,27 @@ public class GameThread extends Thread {
         this.mainPanel = p;
     }
 
+    MenuKeyListener listener = new MenuKeyListener() {
+        public void menuKeyTyped(MenuKeyEvent e) {
+            
+         }
+         public void menuKeyPressed(MenuKeyEvent e) {
+            System.out.println(e.getKeyChar());
+         }
+         public void menuKeyReleased(MenuKeyEvent e) {
+           
+         }
+    };
+
     public void run(){
         int count = 0; 
         while(true){
 
             boolean check = mainPanel.moveBlocks();
             
-            if(mainPanel.getCurrBlock().isMoving()==false){
+            check = mainPanel.getCurrBlock().isMoving();
+
+            if(!check){
                 mainPanel.spawnBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.BLUE, 7,-3);
             }
             
